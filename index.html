@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            list-style: none;
+            text-decoration: none;
+        }
+
+        #main {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+        }
+
+        .box {
+            width: 20%;
+            height: 200px;
+            /* border: solid red 1px; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #overlay {
+            height: 100%;
+            width: 100%;
+            /* display: none; */
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            /* background-color: black; */
+            transform: scale(0);
+            transition: 1s;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay"></div>
+    <div id="main">
+
+    </div>
+</body>
+<script>
+    var overlay = document.querySelector('#overlay')
+    var main = document.querySelector('#main')
+
+
+    for (var i = 0; i <= 120; i++) {
+        var createnewbox = document.createElement('div')
+        createnewbox.classList.add('box')
+        main.append(createnewbox)
+
+        var functionclr = newcolorgenrator();
+        createnewbox.style.background = functionclr;
+        createnewbox.innerText = functionclr;
+        createnewbox.addEventListener(
+            'click',
+            function (e) {
+                navigator.clipboard.writeText(e.target.innerText);
+                // overlay.style.display = 'block'
+                overlay.innerText = "copied";
+                overlay.style.background = e.target.innerText;
+                overlay.style.transform = "scale(1)";
+                overlay.style.opacity = "1";
+                overlay.style.visibility = "visible";
+
+                setTimeout(
+                    function () {
+                        overlay.style.transform = "scale(0)";
+                        overlay.style.opacity = "0";
+                        overlay.style.visibility = "hidden";
+
+                    },
+                    1000
+                )
+            }
+        )
+    }
+
+
+
+
+
+    function newcolorgenrator() {
+        var red = parseInt(Math.random() * 256).toString(16)
+        var blue = parseInt(Math.random() * 256).toString(16)
+        var green = parseInt(Math.random() * 256).toString(16)
+        var code = "#" + red + blue + green;
+        if (code.length < 7) {
+            return newcolorgenrator() // #525252
+        }
+        else {
+            return code;
+        }
+    }
+
+</script>
+
+</html>
